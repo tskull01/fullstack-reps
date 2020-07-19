@@ -5,8 +5,15 @@ const cors = require("cors");
 
 app.use(cors());
 //app.use for use with middleware passes data through a function
+//example middleware
+app.use((req, res, next) => {
+  console.log("Can do whatever");
+  console.log("have to call next");
+  next();
+});
 app.get("/", (req, res) => res.send(req.body));
-app.put("/", (req, res) => {
+//routes can be regex or exact matching + parameter matching
+app.post("/", (req, res) => {
   res.sendDate;
 });
 app.listen(port, () =>
