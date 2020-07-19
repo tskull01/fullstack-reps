@@ -11,10 +11,10 @@ app.use((req, res, next) => {
   console.log("have to call next");
   next();
 });
-app.get("/", (req, res) => res.send(req.body));
+app.get("/", (req, res) => res.send("req.body"));
 //routes can be regex or exact matching + parameter matching
 app.post("/", (req, res) => {
-  res.sendDate;
+  res.sendDate = true;
 });
 app.listen(port, () =>
   console.log(`Example app listening at http://localhost:${port}`)
