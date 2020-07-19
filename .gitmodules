@@ -1,3 +1,3 @@
 [submodule "./fullstack-reps/fs-react/"]
-    path = ./fullstack-reps/fs-react/
-    url = 'https://github.com/tskull01/fullstack-react.git'
+    path = "https://github.com/tskull01/fullstack-react.git"
+    url = "https://github.com/tskull01/fullstack-react.git"
