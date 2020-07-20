@@ -20,14 +20,8 @@ app.post("/", (req, res) => {
 app.put("/", (req, res) => {
   res.send({ dirname: __dirname });
 });
-const listenFunction = async () => {
-  let connection = await mongoose
-    .connect("mongodb://fullstack.cyou:27017/bjj", {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    })
-    .then(async (connection) => {});
-  console.log(connection);
-  console.log(`Example app listening at http://localhost:${port}`);
-};
-app.listen(port, listenFunction);
+mongoose.connect("mongodb://fullstack.cyou:27017/bjj").then(() => {
+  app.listen(port, () => {
+    console.log(`App listening on port ${port}`);
+  });
+});
