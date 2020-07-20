@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 const port = 3000;
-const cors = require("cors");
 const path = require("path");
 const mongoose = require("mongoose");
 
@@ -20,7 +19,7 @@ app.post("/", (req, res) => {
 app.put("/", (req, res) => {
   res.send({ dirname: __dirname });
 });
-mongoose.connect("mongodb://fullstack.cyou:27017/bjj").then(() => {
+mongoose.connect("mongodb://tskulley:password@fullstack.cyou:27017/bjj",{ useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
   app.listen(port, () => {
     console.log(`App listening on port ${port}`);
   });
