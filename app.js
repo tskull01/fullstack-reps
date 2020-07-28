@@ -20,17 +20,6 @@ app.post("/", (req, res) => {
 app.put("/", (req, res) => {
   res.send({ dirname: __dirname });
 });
-
-mongoose
-  .connect("mongodb://fullstack.cyou:27017/bjj", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then((connect) => {
-    app.listen(port, () => {
-      console.log(
-        `App listening on port ${port}` + `database connection ${connect}`
-      );
-    });
-  })
-  .catch((e) => console.log(`Invalid connection ${e}`));
+app.listen(port, () => {
+  console.log(`App listening on port ${port}`);
+});
