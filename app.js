@@ -20,6 +20,13 @@ app.post("/", (req, res) => {
 app.put("/", (req, res) => {
   res.send({ dirname: __dirname });
 });
-app.listen(port, () => {
-  console.log(`App listening on port ${port}`);
-});
+mongoose
+  .connect("mongodb://tskulley:password@fullstack.cyou:27017/bjj", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`App listening on port ${port}`);
+    });
+  });
