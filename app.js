@@ -25,8 +25,13 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(() => {
+  .then((connection) => {
     app.listen(port, () => {
       console.log(`App listening on port ${port}`);
+    });
+    const db = connection.connection;
+    db.on("error", console.error.bind(console, "connection error:"));
+    db.once("open", function () {
+      console.log("were connected");
     });
   });
