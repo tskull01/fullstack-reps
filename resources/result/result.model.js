@@ -16,8 +16,8 @@ const resultSchema = new mongoose.Schema({
   },
   winner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "team",
+    ref: "competitor",
   },
 });
 
-module.exports = mongoose.model("result", resultSchema);
+export const Result = mongoose.model("result", resultSchema);

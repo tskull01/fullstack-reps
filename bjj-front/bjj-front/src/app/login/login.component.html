@@ -1,0 +1,40 @@
+<div *ngIf="!signup">
+  <h2>Login to an existing profile or <a>create a new one</a></h2>
+  <form [formGroup]="loginForm" (submit)="submit()">
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label> Email </mat-label>
+      <input matInput formControlName="email" required />
+      <mat-error
+        *ngIf="
+          loginForm.controls.email.touched && loginForm.controls.email.invalid
+        "
+      >
+        <span *ngIf="loginForm.controls.username.errors.required"
+          >Username is required.</span
+        >
+      </mat-error>
+    </mat-form-field>
+    <br />
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label> Password </mat-label>
+      <input matInput formControlName="password" type="password" />
+      <mat-error
+        *ngIf="
+          loginForm.controls.password.touched &&
+          loginForm.controls.password.invalid
+        "
+      >
+        <span *ngIf="loginForm.controls.password.errors.required"
+          >Password is required.</span
+        >
+      </mat-error>
+    </mat-form-field>
+    <br />
+    <div class="subButton">
+      <button mat-raised-button color="primary" type="submit">Log In</button>
+    </div>
+  </form>
+</div>
+<div class="signup" *ngIf="signup">
+  <app-signup></app-signup>
+</div>

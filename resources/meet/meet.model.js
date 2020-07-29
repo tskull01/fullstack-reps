@@ -18,7 +18,8 @@ const meetSchema = new mongoose.Schema({
     required: true,
   },
   location: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "location",
     required: true,
   },
   matches: [
@@ -29,10 +30,8 @@ const meetSchema = new mongoose.Schema({
     },
   ],
   completed: Boolean,
-  result: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "result",
-  },
+  homeScore: Number,
+  awayScore: Number,
 });
 
-module.exports = mongoose.model("meet", meetSchema);
+export const Meet = mongoose.model("meet", meetSchema);

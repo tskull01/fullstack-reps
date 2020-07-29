@@ -14,6 +14,7 @@ const scheduleSchema = new mongoose.Schema({
       required: true,
     },
   ],
+  startDate: Date,
 });
 
-module.exports = mongoose.model("schedule", scheduleSchema);
+export const Schedule = mongoose.model("schedule", scheduleSchema);

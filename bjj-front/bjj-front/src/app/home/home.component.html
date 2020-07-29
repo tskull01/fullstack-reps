@@ -1,0 +1,16 @@
+<h2>Welcome to bjj-league-placeholder</h2>
+<button mat-raised-button (click)="login()">
+  Login
+</button>
+<form [formGroup]="leagueForm" (submit)="submit()">
+  <mat-form-field appearance="outline">
+    <mat-label>Select a league</mat-label>
+    <input matInput required formControlName="leagueSelection" />
+  </mat-form-field>
+  <button mat-raised-button (click)="createLeague()" *ngIf="isAdmin">
+    Create a league
+  </button>
+  <button mat-raised-button (click)="selectLeague(leagueForm.value)">
+    Select League
+  </button>
+</form>

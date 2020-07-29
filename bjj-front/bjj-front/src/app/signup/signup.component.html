@@ -1,0 +1,55 @@
+<h3>Information for your new bjj-league profile</h3>
+<form [formGroup]="signupForm">
+  <div class="form-flex">
+    <mat-form-field appearance="outline">
+      <mat-label>Full Name</mat-label>
+      <input matInput required formControlName="name" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput required formControlName="email" />
+    </mat-form-field>
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label> Password </mat-label>
+      <input matInput formControlName="password" type="password" />
+      <mat-error
+        *ngIf="
+          signupForm.controls.password.touched &&
+          signupForm.controls.password.invalid
+        "
+      >
+        <span *ngIf="signupForm.controls.password.errors.required"
+          >Password is required.</span
+        >
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Home Gym</mat-label>
+      <mat-select formControlName="gymSelect">
+        <mat-option value="gym.name" *ngFor="let gym of gyms">{{
+          gym.name
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div *ngIf="!createGym">
+      <button mat-raised-button (click)="showGymForm()">
+        Enter new gym
+      </button>
+    </div>
+    <div class="createGym" *ngIf="createGym">
+      <mat-form-field appearance="outline">
+        <mat-label>Gym Name</mat-label>
+        <input matInput formControlName="gymName" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Gym Location</mat-label>
+        <input matInput formControlName="gymAddress" />
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="subButton">
+    <button mat-raised-button (click)="submit(signupForm.value)">
+      Welcome to bbj-league
+    </button>
+  </div>
+</form>

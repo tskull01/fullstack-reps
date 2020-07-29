@@ -11,10 +11,14 @@ const teamSchema = new mongoose.Schema({
       ref: "competitor",
     },
   ],
-  gym: String,
+  gym: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "location",
+    required: true,
+  },
   coach: String,
   wins: Number,
   losses: Number,
 });
 
-module.exports = mongoose.model("team", teamSchema);
+export const Team = mongoose.model("team", teamSchema);

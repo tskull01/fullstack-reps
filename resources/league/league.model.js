@@ -10,14 +10,18 @@ const leagueSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "team",
-      require: true,
+      required: true,
     },
   ],
   schedule: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "schedule",
-    require: true,
+    required: true,
+  },
+  startDate: {
+    type: Date,
+    required: true,
   },
 });
 
-module.exports = mongoose.model("league", leagueSchema);
+export const League = mongoose.model("league", leagueSchema);

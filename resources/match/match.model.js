@@ -14,4 +14,4 @@ const matchSchema = new mongoose.Schema({
   awayScore: Number,
 });
 
-module.exports = mongoose.model("match", matchSchema);
+export const Match = mongoose.model("match", matchSchema);
