@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "fs-react/build", "index.html"));
 });
 */
-app.use(express.static(path.join(__dirname, "bjj-front/dist ")));
+app.use(express.static(path.join(__dirname, "bjj-front/dist")));
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "bjj-front/dist", "index.html"));
