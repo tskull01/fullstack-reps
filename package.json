@@ -1,8 +1,8 @@
 {
   "name": "fullstack_app",
   "version": "1.0.0",
-  "description": "reps reps reps ",
-  "main": "app.js",
+  "description": "reps reps reps",
+  "main": "app.mjs",
   "scripts": {
     "test": "test",
     "start": "nodemon --exec babel-node app.js"
