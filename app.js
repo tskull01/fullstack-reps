@@ -4,19 +4,19 @@ const port = 3000;
 const path = require("path");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-//const teamRouter = require("./resources/team/team.router");
-//const scheduleRouter = require("./resources/schedule/schedule.router");
-//const meetRouter = require("./resources/meet/meet.router");
-//const matchRouter = require("./resources/match/match.router");
-//const locationRouter = require("./resources/location/location.router");
-//const competitorRouter = require("./resources/competitor/competitor.router ");
+const teamRouter = require("./resources/team/team.router");
+const scheduleRouter = require("./resources/schedule/schedule.router");
+const meetRouter = require("./resources/meet/meet.router");
+const matchRouter = require("./resources/match/match.router");
+const locationRouter = require("./resources/location/location.router");
+const competitorRouter = require("./resources/competitor/competitor.router");
 
 dotenv.config();
 //app.use for use with middleware passes data through a function
 //example middleware
 
 //app.use(express.static(path.join(__dirname, "fs-react/build")));
- 
+
 //app.get("/", (req, res) => {
 //  res.sendFile(path.join(__dirname, "fs-react/build", "index.html"));
 //});
