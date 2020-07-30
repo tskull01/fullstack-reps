@@ -21,10 +21,10 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "fs-react/build", "index.html"));
 });
 */
-app.use(express.static(path.join(__dirname, "bjj-front/dist")));
+app.use(express.static(path.join(__dirname, "bjj-front/dist/bjj-front")));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "bjj-front/dist", "index.html"));
+  res.sendFile(path.join(__dirname, "bjj-front/dist/bjj-front", "index.html"));
 });
 //routes can be regex or exact matching + parameter matching
 

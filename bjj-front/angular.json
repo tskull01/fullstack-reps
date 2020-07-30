@@ -123,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "bjj-front"
+  "defaultProject": "bjj-front",
+  "cli": {
+    "analytics": "3715ad17-1755-4f20-84fe-257ea33e5670"
+  }
 }
