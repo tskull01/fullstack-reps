@@ -1,3 +1,4 @@
+/*
 const express = require("express");
 const app = express();
 const port = 3000;
@@ -10,7 +11,16 @@ const meetRouter = require("./resources/meet/meet.router");
 const matchRouter = require("./resources/match/match.router");
 const locationRouter = require("./resources/location/location.router");
 const competitorRouter = require("./resources/competitor/competitor.router");
+*/
+import express from "express";
+import path from "path";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import cors from "cors";
+import { json, urlencoded } from "body-parser";
 
+app.use(cors());
+app.use(json());
 dotenv.config();
 //app.use for use with middleware passes data through a function
 //example middleware
