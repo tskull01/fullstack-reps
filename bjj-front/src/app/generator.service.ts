@@ -10,12 +10,14 @@ export class GeneratorService {
   constructor(private http: HttpClient) {}
 
   createModel(value: Model) {
+    console.log(value);
     let returnObs = new Subject();
     this.http
       .post(`http://fullstack.cyou/api/${value.name}`, {
         data: value.data,
       })
       .subscribe((answer) => {
+        console.log(answer);
         returnObs.next(answer);
         returnObs.complete();
       });

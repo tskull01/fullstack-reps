@@ -73,6 +73,7 @@ export class SignupComponent implements OnInit {
     );
     returnObs.subscribe((answer) => {
       //location created or not then update the select options
+      console.log(answer);
     });
   }
   checkPasswords(password, sPassword) {
