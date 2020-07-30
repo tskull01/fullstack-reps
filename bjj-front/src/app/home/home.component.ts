@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
+import League from '../classes/league';
 
 @Component({
   selector: 'app-home',
@@ -12,13 +13,18 @@ export class HomeComponent implements OnInit {
   loggedIn: boolean = false;
   isAdmin: boolean = false;
   leagueForm: FormGroup;
+  leagueNames: string[] = ['Tuesday Silver', 'Saturday Gold', 'Monday Copper'];
+  leagueValue: string;
+  leagues: League[];
   ngOnInit(): void {
+    this.router.navigate(['']);
     this.leagueForm = new FormGroup({
-      leagueSelect: new FormControl(),
+      leagueSelection: new FormControl(this.leagueValue),
     });
   }
   login() {
     //Navigate to login screen and wait for response on is admin and logged in
+    this.router.navigate(['/login']);
   }
   submit() {
     //select a league and go to league schedule view

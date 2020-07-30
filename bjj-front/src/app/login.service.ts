@@ -1,20 +1,26 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   checkLogin(email, password) {
     //Check for user on the competitors table
     //return an observable next() on fulfill
-  }
-  createLogin(name, email, password, homeGym) {
-    //Create new Competitor with these params
-    //When comp is created push to observable and route back to home
-  }
-  createLocation(name, address) {
-    //Create new location
+    let returnObs = new Subject();
+    this.http
+      .post('http://fullstack.cyou/api/competitor', {
+        email: email,
+        password: password,
+      })
+      .subscribe((answer) => {
+        returnObs.next(answer);
+        returnObs.complete();
+      });
+    return returnObs;
   }
 }

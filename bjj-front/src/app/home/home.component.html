@@ -1,12 +1,20 @@
-<h2>Welcome to bjj-league-placeholder</h2>
-<button mat-raised-button (click)="login()">
-  Login
-</button>
-<form [formGroup]="leagueForm" (submit)="submit()">
-  <mat-form-field appearance="outline">
+<mat-toolbar>
+  <h2>Bjj-league-placeholder</h2>
+  <span class="example-spacer" style="flex: 1 1 auto;"></span>
+  <button mat-raised-button (click)="login()">
+    Login
+  </button>
+</mat-toolbar>
+<form [formGroup]="leagueForm" (submit)="submit()" class="home-form">
+  <mat-form-field appearance="fill">
     <mat-label>Select a league</mat-label>
-    <input matInput required formControlName="leagueSelection" />
+    <mat-select formControlName="leagueSelection">
+      <mat-option value="league" *ngFor="let league of leagueNames">{{
+        league
+      }}</mat-option>
+    </mat-select>
   </mat-form-field>
+
   <button mat-raised-button (click)="createLeague()" *ngIf="isAdmin">
     Create a league
   </button>

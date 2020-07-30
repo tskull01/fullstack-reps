@@ -1,0 +1,25 @@
+.form-flex {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin-left: 10vw;
+}
+.create-gym {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.subButton {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.select-gym {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  align-items: baseline;
+}

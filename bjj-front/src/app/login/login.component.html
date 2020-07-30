@@ -1,6 +1,17 @@
-<div *ngIf="!signup">
-  <h2>Login to an existing profile or <a>create a new one</a></h2>
-  <form [formGroup]="loginForm" (submit)="submit()">
+<mat-toolbar>
+  <h2>Bjj-league-placeholder</h2>
+  <span class="example-spacer" style="flex: 1 1 auto;"></span>
+  <button mat-raised-button (click)="signup()">
+    Signup
+  </button>
+</mat-toolbar>
+
+<h3 class="login-title">
+  Login to an existing profile or
+  <a (click)="signup()" class="signup-link">create a new one</a>
+</h3>
+<form [formGroup]="loginForm" (submit)="submit()">
+  <div class="login-flex">
     <mat-form-field class="form-field" appearance="outline">
       <mat-label> Email </mat-label>
       <input matInput formControlName="email" required />
@@ -10,14 +21,14 @@
         "
       >
         <span *ngIf="loginForm.controls.username.errors.required"
-          >Username is required.</span
+          >Email is required.</span
         >
       </mat-error>
     </mat-form-field>
     <br />
     <mat-form-field class="form-field" appearance="outline">
       <mat-label> Password </mat-label>
-      <input matInput formControlName="password" type="password" />
+      <input matInput required formControlName="password" type="password" />
       <mat-error
         *ngIf="
           loginForm.controls.password.touched &&
@@ -30,11 +41,8 @@
       </mat-error>
     </mat-form-field>
     <br />
-    <div class="subButton">
-      <button mat-raised-button color="primary" type="submit">Log In</button>
-    </div>
-  </form>
-</div>
-<div class="signup" *ngIf="signup">
-  <app-signup></app-signup>
-</div>
+  </div>
+  <div class="login-btn">
+    <button mat-raised-button color="primary" type="submit">Log In</button>
+  </div>
+</form>

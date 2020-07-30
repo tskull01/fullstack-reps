@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../login.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,11 +12,12 @@ export class LoginComponent implements OnInit {
   //either login or create a new user
   //check competitor table for login info
   loginForm: FormGroup;
-  signup: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -28,12 +30,15 @@ export class LoginComponent implements OnInit {
     if (!this.loginForm.valid) {
       return;
     }
-    let returnObservable = this.loginService.checkLogin(
+    let returnObs = this.loginService.checkLogin(
       this.loginForm.value.email,
       this.loginForm.value.password
     );
-    // returnObservable.subscribe((answer) => {
+    // returnObs.subscribe((answer) => {
 
     //});
+  }
+  signup() {
+    this.router.navigate(['/signup']);
   }
 }

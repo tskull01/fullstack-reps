@@ -1,3 +1,10 @@
+<mat-toolbar>
+  <h2>Bjj-league-placeholder</h2>
+  <span class="example-spacer" style="flex: 1 1 auto;"></span>
+  <button mat-raised-button (click)="login()">
+    Login
+  </button>
+</mat-toolbar>
 <h3>Information for your new bjj-league profile</h3>
 <form [formGroup]="signupForm">
   <div class="form-flex">
@@ -11,7 +18,7 @@
     </mat-form-field>
     <mat-form-field class="form-field" appearance="outline">
       <mat-label> Password </mat-label>
-      <input matInput formControlName="password" type="password" />
+      <input matInput required formControlName="password" type="password" />
       <mat-error
         *ngIf="
           signupForm.controls.password.touched &&
@@ -23,20 +30,46 @@
         >
       </mat-error>
     </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Home Gym</mat-label>
-      <mat-select formControlName="gymSelect">
-        <mat-option value="gym.name" *ngFor="let gym of gyms">{{
-          gym.name
-        }}</mat-option>
-      </mat-select>
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label>Confirm Password </mat-label>
+      <input
+        matInput
+        required
+        formControlName="confirmPassword"
+        type="password"
+      />
+      <mat-error
+        *ngIf="
+          signupForm.controls.password.touched &&
+          signupForm.controls.password.invalid
+        "
+      >
+        <span *ngIf="signupForm.controls.password.errors.required"
+          >Password is required.</span
+        >
+        <span *ngIf="signupForm.controls.password.errors.passwordMismatch">
+          Passwords have to match
+        </span>
+        <span *ngIf="signupForm.controls.password.errors.passwordMismatch">
+          Password is too short must be 8 characters long
+        </span>
+        <mat-hint>Passowrd must be > 8</mat-hint>
+      </mat-error>
     </mat-form-field>
-    <div *ngIf="!createGym">
+    <div *ngIf="!gymBool" class="select-gym">
+      <mat-form-field appearance="fill">
+        <mat-label>Home Gym</mat-label>
+        <mat-select formControlName="gymSelect">
+          <mat-option value="gym.name" *ngFor="let gym of gyms">{{
+            gym.name
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
       <button mat-raised-button (click)="showGymForm()">
-        Enter new gym
+        Enter New Gym
       </button>
     </div>
-    <div class="createGym" *ngIf="createGym">
+    <div class="create-gym" *ngIf="gymBool">
       <mat-form-field appearance="outline">
         <mat-label>Gym Name</mat-label>
         <input matInput formControlName="gymName" />
@@ -45,11 +78,16 @@
         <mat-label>Gym Location</mat-label>
         <input matInput formControlName="gymAddress" />
       </mat-form-field>
+      <div>
+        <button mat-raised-button (click)="createGym()">
+          Create Gym
+        </button>
+      </div>
     </div>
   </div>
   <div class="subButton">
     <button mat-raised-button (click)="submit(signupForm.value)">
-      Welcome to bbj-league
+      Submit
     </button>
   </div>
 </form>

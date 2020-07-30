@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,8 +13,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { SignupComponent } from './signup/signup.component';
+import { CreateLeagueComponent } from './create-league/create-league.component';
 @NgModule({
-  declarations: [AppComponent, HomeComponent, LoginComponent, SignupComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    LoginComponent,
+    SignupComponent,
+    CreateLeagueComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -25,6 +32,7 @@ import { SignupComponent } from './signup/signup.component';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatToolbarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
