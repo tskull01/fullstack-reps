@@ -21,4 +21,4 @@ const teamSchema = new mongoose.Schema({
   losses: Number,
 });
 
-export const Team = mongoose.model("team", teamSchema);
+exports.Team = mongoose.model("team", teamSchema);

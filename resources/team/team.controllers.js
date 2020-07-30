@@ -1,5 +1,4 @@
-import { crudControllers } from "../utils/crud";
-import { Team } from "./team.model";
 const crudControllers = require("../utils/crud");
+const Team = require("./team.model");
 
-export default crudControllers(Team);
+exports.crudControllers = crudControllers(Team);

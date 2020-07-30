@@ -11,4 +11,4 @@ router
   .put(controllers.updateOne)
   .delete(controllers.removeOne);
 router.route("/team").get(controllers.getAll);
-export default router;
+exports.Router = router;
