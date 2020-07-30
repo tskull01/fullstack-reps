@@ -11,6 +11,7 @@ export class LoginService {
   checkLogin(email, password) {
     //Check for user on the competitors table
     //return an observable next() on fulfill
+
     let returnObs = new Subject();
     this.http
       .post('http://fullstack.cyou/api/competitor', {
