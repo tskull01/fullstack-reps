@@ -1,8 +1,6 @@
-import { Router } from "express";
-import controllers from "./team.controllers";
-
-const router = Router();
-
+const express = require("express");
+const controllers = require("./team.controllers");
+const router = express.Router();
 // /api/list
 router.route("/").get(controllers.getOne).post(controllers.createOne);
 
