@@ -1,5 +1,6 @@
 export const getOne = (model) => async (req, res) => {
   try {
+    console.log(`Request ${req} Response ${res}`);
     const doc = await model
       .findOne({ createdBy: req.user._id, _id: req.params.id })
       .lean()
@@ -26,11 +27,11 @@ export const getMany = (model) => async (req, res) => {
     res.status(400).end();
   }
 };
-export const getAll = (model) => async (req, res) => {};
+
 export const createOne = (model) => async (req, res) => {
-  const createdBy = req.user._id;
   try {
-    const doc = await model.create({ ...req.body, createdBy });
+    console.log(`Request ${req} Response ${res}`);
+    const doc = await model.create({ ...req.body });
     res.status(201).json({ data: doc });
   } catch (e) {
     console.error(e);
@@ -43,7 +44,6 @@ export const updateOne = (model) => async (req, res) => {
     const updatedDoc = await model
       .findOneAndUpdate(
         {
-          createdBy: req.user._id,
           _id: req.params.id,
         },
         req.body,
@@ -87,5 +87,4 @@ export const crudControllers = (model) => ({
   getMany: getMany(model),
   getOne: getOne(model),
   createOne: createOne(model),
-  getAll: getAll(model),
 });

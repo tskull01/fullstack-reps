@@ -12,7 +12,7 @@ import meetRouter from "./resources/meet/meet.router";
 import matchRouter from "./resources/match/match.router";
 import locationRouter from "./resources/location/location.router";
 import competitorRouter from "./resources/competitor/competitor.router";
-
+import { Router } from "express";
 app.use(cors());
 app.use(json());
 dotenv.config();
@@ -35,13 +35,12 @@ app.get("/", (req, res) => {
 //api/league
 //api/schedule
 //
-app.use("/api/team", teamRouter);
-app.use("/api/schedule", scheduleRouter);
-app.use("/api/meet", meetRouter);
-app.use("/api/match", matchRouter);
-app.use("/api/location", locationRouter);
-app.use("/api/competitor", competitorRouter);
-
+app.use("/api/teams", teamRouter);
+app.use("/api/schedules", scheduleRouter);
+app.use("/api/meets", meetRouter);
+app.use("/api/matchs", matchRouter);
+app.use("/api/locations", locationRouter);
+app.use("/api/competitors", competitorRouter);
 mongoose
   .connect("mongodb://fullstack.cyou:27017/bjj", {
     useNewUrlParser: true,
