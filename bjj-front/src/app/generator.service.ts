@@ -13,7 +13,7 @@ export class GeneratorService {
     console.log(JSON.stringify(value) + 'value inside createmodel');
     let returnObs = new Subject();
     this.http
-      .post(`http://fullstack.cyou:27017/bjj/api/${value.name}`, {
+      .post(`http://fullstack.cyou/api/${value.name}`, {
         data: value.data,
       })
       .subscribe((answer) => {

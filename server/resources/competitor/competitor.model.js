@@ -15,7 +15,6 @@ const competitorSchema = new mongoose.Schema({
   },
   experienceLevel: {
     type: String,
-    required: true,
   },
   birthYear: Number,
   weight: { type: Number, required: true },

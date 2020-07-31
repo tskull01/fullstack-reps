@@ -11,7 +11,7 @@ import { json, urlencoded } from "body-parser";
 //import meetRouter from "./resources/meet/meet.router";
 //import matchRouter from "./resources/match/match.router";
 //import locationRouter from "./resources/location/location.router";
-//import competitorRouter from "./resources/competitor/competitor.router";
+import competitorRouter from "./resources/competitor/competitor.router";
 import { Location } from "./resources/location/location.model";
 import stringy from "./stringy";
 import { connect } from "./resources/utils/db";
@@ -43,7 +43,7 @@ app.get("/", (req, res) => {
 //app.use("/api/meets", meetRouter);
 //app.use("/api/matchs", matchRouter);
 //app.use("/api/locations", locationRouter);
-//app.use("/api/competitors", competitorRouter);
+app.use("/api/competitors", competitorRouter);
 app.post("/api/locations", (req, res) => {
   connect()
     .then((connected) => {
