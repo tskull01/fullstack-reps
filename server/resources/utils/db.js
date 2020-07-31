@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
-import options from "./config";
-
-export const connect = (url = options.url, opts = {}) => {
-  return mongoose.connect(url, { ...opts, useNewUrlParser: true });
+export const connect = () => {
+  return mongoose.connect("mongodb://fullstack.cyou:27017/bjj", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    keepAlive: true,
+    keepAliveInitialDelay: 30000,
+  });
 };

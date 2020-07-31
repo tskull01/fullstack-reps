@@ -12,9 +12,8 @@ export class GeneratorService {
   createModel(value: Model) {
     console.log(JSON.stringify(value) + 'value inside createmodel');
     let returnObs = new Subject();
-    console.log(`http://fullstack.cyou/api/${value.name}`);
     this.http
-      .post(`http://fullstack.cyou:27017/api/${value.name}`, {
+      .post(`http://fullstack.cyou:27017/bjj/api/${value.name}`, {
         data: value.data,
       })
       .subscribe((answer) => {

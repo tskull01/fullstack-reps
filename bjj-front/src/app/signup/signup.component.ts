@@ -69,7 +69,7 @@ export class SignupComponent implements OnInit {
     let gymAddress = this.signupForm.controls.gymAddress.value;
 
     let returnObs = this.generatorService.createModel(
-      new Model('location', { gymName: gymName, gymAddress: gymAddress })
+      new Model('locations', { gymName: gymName, address: gymAddress })
     );
     returnObs.subscribe((answer) => {
       //location created or not then update the select options

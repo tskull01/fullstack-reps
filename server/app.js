@@ -13,9 +13,12 @@ import { json, urlencoded } from "body-parser";
 //import locationRouter from "./resources/location/location.router";
 //import competitorRouter from "./resources/competitor/competitor.router";
 import { Location } from "./resources/location/location.model";
+import stringy from "./stringy";
+import { connect } from "./resources/utils/db";
 app.use(cors());
 app.use(json());
 dotenv.config();
+
 //app.use for use with middleware passes data through a function
 //example middleware
 
@@ -41,39 +44,56 @@ app.get("/", (req, res) => {
 //app.use("/api/matchs", matchRouter);
 //app.use("/api/locations", locationRouter);
 //app.use("/api/competitors", competitorRouter);
-app.post("api/locations", (req, res) => {
-  Location.create({ ...req.body })
-    .then((value) => {
-      console.log(value);
-      res.send("Location created");
+app.post("/api/locations", (req, res) => {
+  connect()
+    .then((connected) => {
+      Location.create({ ...req.body })
+        .then((value) => {
+          console.log(value);
+          res.send("Location created");
+        })
+        .catch((e) => {
+          res.send(`creation failed ${e}`);
+        });
     })
     .catch((e) => {
       res.send(`creation failed ${e}`);
     });
 });
-mongoose
-  .connect("mongodb://fullstack.cyou:27017/bjj", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    keepAlive: true,
-    keepAliveInitialDelay: 30000,
-  })
-  .then((connection) => {
-    app.listen(port, () => {
-      console.log(
-        `App listening on port ${port} ${
-          connection.connection
-        } ${JSON.stringify(connection.models)}`
-      );
+app.get("/api/locations", (req, res) => {
+  connect()
+    .then((connected) => {
+      Location.find({ gymName: "stars" }, "gymName address", function (
+        err,
+        gyms
+      ) {
+        console.log(gyms);
+      })
+        .then((value) => {
+          console.log(value);
+          res.send("Location created");
+        })
+        .catch((e) => {
+          res.send(`creation failed ${e}`);
+        });
+    })
+    .catch((e) => {
+      res.send(`creation failed ${e}`);
     });
-    const db = connection.connection;
-    db.on("error", console.error.bind(console, "connection error:"));
-    db.on("open", function () {
-      console.log("were connected");
-    });
-    console.log(db.port + "DB PORT");
-    console.log(db.models + " DB MODELS ");
-  })
-  .catch((error) => {
-    console.log(error + "ERROR ON CONNECTION");
+});
+connect().then((connection) => {
+  app.listen(port, () => {
+    console.log(
+      `App listening on port ${port}${stringy.stringify(
+        connection.connections[0].host
+      )}`
+    );
   });
+  const db = connection.connection;
+  db.on("error", console.error.bind(console, "connection error:"));
+  db.on("open", function () {
+    console.log("were connected");
+  });
+  console.log(Object.keys(db.models) + "DB PORT");
+  console.log(stringy.stringify(db.models) + " DB MODELS ");
+});
