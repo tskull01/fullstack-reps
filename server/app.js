@@ -12,7 +12,6 @@ import { json, urlencoded } from "body-parser";
 //import matchRouter from "./resources/match/match.router";
 //import locationRouter from "./resources/location/location.router";
 //import competitorRouter from "./resources/competitor/competitor.router";
-import { Router } from "express";
 import { Location } from "./resources/location/location.model";
 app.use(cors());
 app.use(json());
@@ -45,6 +44,7 @@ app.get("/", (req, res) => {
 app.post("api/locations", (req, res) => {
   Location.create({ ...req.body })
     .then((value) => {
+      console.log(value);
       res.send("Location created");
     })
     .catch((e) => {
@@ -55,14 +55,23 @@ mongoose
   .connect("mongodb://fullstack.cyou:27017/bjj", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    keepAlive: true,
+    keepAliveInitialDelay: 30000,
   })
   .then((connection) => {
     app.listen(port, () => {
-      console.log(`App listening on port ${port}`);
+      console.log(
+        `App listening on port ${port} ${JSON.stringify(connection)}`
+      );
     });
     const db = connection.connection;
     db.on("error", console.error.bind(console, "connection error:"));
-    db.once("open", function () {
+    db.on("open", function () {
       console.log("were connected");
     });
+    console.log(db.port + "DB PORT");
+    console.log(db.models + " DB MODELS ");
+  })
+  .catch((error) => {
+    console.log(error + "ERROR ON CONNECTION");
   });
