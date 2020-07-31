@@ -12,5 +12,5 @@ router
   .get(controllers.getOne)
   .put(controllers.updateOne)
   .delete(controllers.removeOne);
-router.route("/result").get(controllers.getAll);
+router.route("/results").get(controllers.getAll);
 export default router;

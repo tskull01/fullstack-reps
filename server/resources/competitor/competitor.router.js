@@ -12,5 +12,5 @@ router
   .get(controllers.getOne)
   .put(controllers.updateOne)
   .delete(controllers.removeOne);
-router.route("/competitor").get(controllers.getAll);
+router.route("/competitors").get(controllers.getAll);
 export default router;

@@ -12,5 +12,5 @@ router
   .get(controllers.getOne)
   .put(controllers.updateOne)
   .delete(controllers.removeOne);
-router.route("/schedule").get(controllers.getAll);
+router.route("/schedules").get(controllers.getAll);
 export default router;
