@@ -86,6 +86,9 @@ app.get("/api/locations", (req, res) => {
       res.send(`creation failed ${e}`);
     });
 });
+app.get("/check", (req, res) => {
+  res.send("working");
+});
 connect().then((connection) => {
   app.listen(port, () => {
     console.log(

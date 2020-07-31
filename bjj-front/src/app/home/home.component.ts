@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 import League from '../classes/league';
+import { GeneratorService } from '../generator.service';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +10,11 @@ import League from '../classes/league';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private generatorService: GeneratorService
+  ) {}
   loggedIn: boolean = false;
   isAdmin: boolean = false;
   leagueForm: FormGroup;
