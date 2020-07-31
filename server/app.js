@@ -61,7 +61,9 @@ mongoose
   .then((connection) => {
     app.listen(port, () => {
       console.log(
-        `App listening on port ${port} ${connection.connection} ${connection.models}`
+        `App listening on port ${port} ${
+          connection.connection
+        } ${JSON.stringify(connection.models)}`
       );
     });
     const db = connection.connection;
