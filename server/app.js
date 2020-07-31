@@ -47,6 +47,7 @@ app.get("/", (req, res) => {
 app.post("/api/locations", (req, res) => {
   connect()
     .then((connected) => {
+      console.log(connected);
       Location.create({ ...req.body })
         .then((value) => {
           console.log(value);
@@ -67,8 +68,12 @@ app.get("/api/locations", (req, res) => {
         err,
         gyms
       ) {
+        if (err) {
+          console.log(err);
+        }
         console.log(gyms);
       })
+        .exec()
         .then((value) => {
           console.log(value);
           res.send("Location created");
