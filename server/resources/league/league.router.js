@@ -16,5 +16,4 @@ router
   .put(crudControllers(League).updateOne)
   .delete(crudControllers(League).removeOne);
 
-router.route("/all").get(crudControllers(League).getMany);
 export default router;

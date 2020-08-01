@@ -16,5 +16,4 @@ router
   .put(crudControllers(Result).updateOne)
   .delete(crudControllers(Result).removeOne);
 
-router.route("/all").get(crudControllers(Result).getMany);
 export default router;

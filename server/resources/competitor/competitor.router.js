@@ -17,5 +17,4 @@ router
   .put(crudControllers(Competitor).updateOne)
   .delete(crudControllers(Competitor).removeOne);
 
-router.route("/all").get(crudControllers(Competitor).getMany);
 export default router;

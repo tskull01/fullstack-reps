@@ -1,11 +1,12 @@
 import stringy from "../../stringy";
 export const getOne = (model) => async (req, res) => {
   try {
-    console.log(req.params.id);
     const doc = await model.findOne({ _id: req.params.id }).lean().exec();
     if (!doc) {
+      console.log(doc);
       return res.status(400).end();
     }
+    console.log(doc);
     res.status(200).json({ data: doc });
   } catch (e) {
     console.error(e);

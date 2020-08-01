@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { stringify } from "../../stringy";
 const competitorSchema = new mongoose.Schema({
   firstName: {
     type: String,
@@ -12,6 +13,10 @@ const competitorSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
   },
   experienceLevel: {
     type: String,
