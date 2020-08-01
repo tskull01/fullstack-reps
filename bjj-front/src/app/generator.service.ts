@@ -23,4 +23,14 @@ export class GeneratorService {
       });
     return returnObs;
   }
+  getAll(model) {
+    let returnObs = new Subject();
+    this.http
+      .get(`http://fullstack.cyou/api/${model}/${model}`)
+      .subscribe((answer) => {
+        returnObs.next(answer);
+        returnObs.complete();
+      });
+    return returnObs;
+  }
 }

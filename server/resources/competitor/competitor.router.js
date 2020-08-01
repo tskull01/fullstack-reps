@@ -1,16 +1,21 @@
 import { Router } from "express";
-import controllers from "./competitor.controllers";
+import { crudControllers } from "../utils/crud";
+import { Competitor } from "./competitor.model";
 
 const router = Router();
 
 // /api/list
-router.route("/").get(controllers.getOne).post(controllers.createOne);
+router
+  .route("/")
+  .get(crudControllers(Competitor).getOne)
+  .post(crudControllers(Competitor).createOne);
 
 // /api/list/:id
 router
   .route("/:id")
-  .get(controllers.getOne)
-  .put(controllers.updateOne)
-  .delete(controllers.removeOne);
-router.route("/competitors").get(controllers.getAll);
+  .get(crudControllers(Competitor).getOne)
+  .put(crudControllers(Competitor).updateOne)
+  .delete(crudControllers(Competitor).removeOne);
+
+router.route("/competitors").get(crudControllers(Competitor).getMany);
 export default router;

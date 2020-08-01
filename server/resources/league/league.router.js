@@ -1,16 +1,20 @@
 import { Router } from "express";
-import controllers from "./league.controllers";
-
+import { crudControllers } from "../utils/crud";
+import { League } from "./league.model";
 const router = Router();
 
 // /api/list
-router.route("/").get(controllers.getOne).post(controllers.createOne);
+router
+  .route("/")
+  .get(crudControllers(League).getOne)
+  .post(crudControllers(League).createOne);
 
 // /api/list/:id
 router
   .route("/:id")
-  .get(controllers.getOne)
-  .put(controllers.updateOne)
-  .delete(controllers.removeOne);
-router.route("/leagues").get(controllers.getAll);
+  .get(crudControllers(League).getOne)
+  .put(crudControllers(League).updateOne)
+  .delete(crudControllers(League).removeOne);
+
+router.route("/leagues").get(crudControllers(League).getMany);
 export default router;

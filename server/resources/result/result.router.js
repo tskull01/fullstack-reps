@@ -1,16 +1,20 @@
 import { Router } from "express";
-import controllers from "./result.controllers";
-
+import { crudControllers } from "../utils/crud";
+import { Result } from "./result.model";
 const router = Router();
 
 // /api/list
-router.route("/").get(controllers.getOne).post(controllers.createOne);
+router
+  .route("/")
+  .get(crudControllers(Result).getOne)
+  .post(crudControllers(Result).createOne);
 
 // /api/list/:id
 router
   .route("/:id")
-  .get(controllers.getOne)
-  .put(controllers.updateOne)
-  .delete(controllers.removeOne);
-router.route("/results").get(controllers.getAll);
+  .get(crudControllers(Result).getOne)
+  .put(crudControllers(Result).updateOne)
+  .delete(crudControllers(Result).removeOne);
+
+router.route("/results").get(crudControllers(Result).getMany);
 export default router;

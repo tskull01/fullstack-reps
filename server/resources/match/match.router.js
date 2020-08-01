@@ -1,16 +1,20 @@
 import { Router } from "express";
-import controllers from "./match.controllers";
-
+import { crudControllers } from "../utils/crud";
+import { Match } from "./match.model";
 const router = Router();
 
 // /api/list
-router.route("/").get(controllers.getOne).post(controllers.createOne);
+router
+  .route("/")
+  .get(crudControllers(Match).getOne)
+  .post(crudControllers(Match).createOne);
 
 // /api/list/:id
 router
   .route("/:id")
-  .get(controllers.getOne)
-  .put(controllers.updateOne)
-  .delete(controllers.removeOne);
-router.route("/matchs").get(controllers.getAll);
+  .get(crudControllers(Match).getOne)
+  .put(crudControllers(Match).updateOne)
+  .delete(crudControllers(Match).removeOne);
+
+router.route("/matches").get(crudControllers(Match).getMany);
 export default router;

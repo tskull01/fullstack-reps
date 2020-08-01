@@ -1,16 +1,20 @@
 import { Router } from "express";
-import controllers from "./schedule.controllers";
-
+import { crudControllers } from "../utils/crud";
+import { Schedule } from "./schedule.model";
 const router = Router();
 
 // /api/list
-router.route("/").get(controllers.getOne).post(controllers.createOne);
+router
+  .route("/")
+  .get(crudControllers(Schedule).getOne)
+  .post(crudControllers(Schedule).createOne);
 
 // /api/list/:id
 router
   .route("/:id")
-  .get(controllers.getOne)
-  .put(controllers.updateOne)
-  .delete(controllers.removeOne);
-router.route("/schedules").get(controllers.getAll);
+  .get(crudControllers(Schedule).getOne)
+  .put(crudControllers(Schedule).updateOne)
+  .delete(crudControllers(Schedule).removeOne);
+
+router.route("/schedules").get(crudControllers(Schedule).getMany);
 export default router;

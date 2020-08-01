@@ -1,15 +1,19 @@
 import { Router } from "express";
-import controllers from "./team.controllers";
-
+import { crudControllers } from "../utils/crud";
+import { Team } from "./team.model";
 const router = Router();
 // /api/item
-router.route("/").get(controllers.getOne).post(controllers.createOne);
+router
+  .route("/")
+  .get(crudControllers(Team).getOne)
+  .post(crudControllers(Team).createOne);
 
-// /api/item/:id
+// /api/list/:id
 router
   .route("/:id")
-  .get(controllers.getOne)
-  .put(controllers.updateOne)
-  .delete(controllers.removeOne);
+  .get(crudControllers(Team).getOne)
+  .put(crudControllers(Team).updateOne)
+  .delete(crudControllers(Team).removeOne);
 
+router.route("/teams").get(crudControllers(Team).getMany);
 export default router;

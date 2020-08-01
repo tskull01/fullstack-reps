@@ -87,3 +87,20 @@ export const protect = async (req, res, next) => {
   req.user = user;
   next();
 };
+/**app.post("/api/locations", (req, res) => {
+  connect()
+    .then((connected) => {
+      console.log(connected);
+      Location.create({ ...req.body })
+        .then((value) => {
+          console.log(value);
+          res.send("Location created");
+        })
+        .catch((e) => {
+          res.send(`creation failed ${e}`);
+        });
+    })
+    .catch((e) => {
+      res.send(`creation failed ${e}`);
+    });
+}); */

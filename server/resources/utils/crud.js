@@ -1,15 +1,11 @@
+import stringy from "../../stringy";
 export const getOne = (model) => async (req, res) => {
   try {
-    console.log(`Request ${req} Response ${res}`);
-    const doc = await model
-      .findOne({ createdBy: req.user._id, _id: req.params.id })
-      .lean()
-      .exec();
-
+    console.log(req.params.id);
+    const doc = await model.findOne({ _id: req.params.id }).lean().exec();
     if (!doc) {
       return res.status(400).end();
     }
-
     res.status(200).json({ data: doc });
   } catch (e) {
     console.error(e);
@@ -19,8 +15,7 @@ export const getOne = (model) => async (req, res) => {
 
 export const getMany = (model) => async (req, res) => {
   try {
-    const docs = await model.find({ createdBy: req.user._id }).lean().exec();
-
+    const docs = await model.find({}).lean().exec();
     res.status(200).json({ data: docs });
   } catch (e) {
     console.error(e);
@@ -30,7 +25,6 @@ export const getMany = (model) => async (req, res) => {
 
 export const createOne = (model) => async (req, res) => {
   try {
-    console.log(`Request ${req} Response ${res}`);
     const doc = await model.create({ ...req.body });
     res.status(201).json({ data: doc });
   } catch (e) {
@@ -41,6 +35,11 @@ export const createOne = (model) => async (req, res) => {
 
 export const updateOne = (model) => async (req, res) => {
   try {
+    console.log(
+      `Request body ${stringy.stringify(
+        req.body
+      )} + Request params ${stringy.stringify(req.params)}`
+    );
     const updatedDoc = await model
       .findOneAndUpdate(
         {
@@ -65,8 +64,8 @@ export const updateOne = (model) => async (req, res) => {
 
 export const removeOne = (model) => async (req, res) => {
   try {
+    console.log(`Params ${stringy.stringify(req.params)}`);
     const removed = await model.findOneAndRemove({
-      createdBy: req.user._id,
       _id: req.params.id,
     });
 
