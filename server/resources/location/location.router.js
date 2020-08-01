@@ -16,5 +16,5 @@ router
   .put(crudControllers(Location).updateOne)
   .delete(crudControllers(Location).removeOne);
 
-router.route("/locations").get(crudControllers(Location).getMany);
+router.route("/all").get(crudControllers(Location).getMany);
 export default router;

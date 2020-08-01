@@ -16,5 +16,5 @@ router
   .put(crudControllers(Meet).updateOne)
   .delete(crudControllers(Meet).removeOne);
 
-router.route("/meets").get(crudControllers(Meet).getMany);
+router.route("/all").get(crudControllers(Meet).getMany);
 export default router;

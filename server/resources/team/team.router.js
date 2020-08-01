@@ -15,5 +15,5 @@ router
   .put(crudControllers(Team).updateOne)
   .delete(crudControllers(Team).removeOne);
 
-router.route("/teams").get(crudControllers(Team).getMany);
+router.route("/all").get(crudControllers(Team).getMany);
 export default router;
