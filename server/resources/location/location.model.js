@@ -19,7 +19,6 @@ const locationSchema = new mongoose.Schema({
   },
   zipcode: {
     type: Number,
-    required: true,
   },
 });
 

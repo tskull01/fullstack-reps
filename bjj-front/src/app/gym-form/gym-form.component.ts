@@ -36,7 +36,7 @@ export class GymFormComponent implements OnInit {
       controls.state.value,
       controls.zip.value
     );
-
+    console.log(gym);
     let returnObs = this.generatorService.createModel(
       new Model('locations', gym)
     );
