@@ -1,12 +1,24 @@
 import mongoose from "mongoose";
 
 const locationSchema = new mongoose.Schema({
-  address: {
+  gymName: {
     type: String,
     required: true,
   },
-  gymName: {
+  city: {
     type: String,
+    required: true,
+  },
+  state: {
+    type: String,
+    required: true,
+  },
+  street: {
+    type: String,
+    required: true,
+  },
+  zip: {
+    type: Number,
     required: true,
   },
 });

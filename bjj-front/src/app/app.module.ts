@@ -14,6 +14,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { SignupComponent } from './signup/signup.component';
 import { CreateLeagueComponent } from './create-league/create-league.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { GymFormComponent } from './gym-form/gym-form.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,6 +24,7 @@ import { CreateLeagueComponent } from './create-league/create-league.component';
     LoginComponent,
     SignupComponent,
     CreateLeagueComponent,
+    GymFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,6 +37,7 @@ import { CreateLeagueComponent } from './create-league/create-league.component';
     MatInputModule,
     MatButtonModule,
     MatToolbarModule,
+    MatAutocompleteModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

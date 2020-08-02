@@ -1,9 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 import GymLocation from '../classes/gymlocation';
 import { Router, ActivatedRoute } from '@angular/router';
 import { GeneratorService } from '../generator.service';
 import Model from '../classes/model';
+import { WorkerService } from '../worker.service';
 
 @Component({
   selector: 'app-signup',
@@ -12,24 +18,28 @@ import Model from '../classes/model';
 })
 export class SignupComponent implements OnInit {
   signupForm: FormGroup;
+  gymForm: FormGroup;
   gymBool: boolean = false;
   gyms: GymLocation[] = [];
+  passwordMismatch: boolean = true;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private route: ActivatedRoute,
-    private generatorService: GeneratorService
+    private generatorService: GeneratorService,
+    private workerService: WorkerService
   ) {}
 
   ngOnInit(): void {
     this.signupForm = this.formBuilder.group({
       name: [null, [Validators.required]],
       email: [null, [Validators.required]],
-      password: [null, Validators.required],
-      confirmPassword: [null, Validators.required],
-      gymSelect: [null, Validators.required],
-      gymName: [null],
-      gymAddress: [null],
+      password: [null, Validators.required, Validators.minLength(8)],
+      confirmPassword: [null, Validators.required, Validators.minLength(8)],
+      homeGym: [null, Validators.required],
+    });
+    this.workerService.returnAllModel('location').subscribe((answer: any) => {
+      console.log(answer);
+      this.gyms = answer.data.map((gym) => gym.gymName);
     });
   }
 
@@ -43,17 +53,18 @@ export class SignupComponent implements OnInit {
       this.signupForm.controls.confirmPassword
     );
     if (
-      !this.signupForm.controls.password.errors.passwordMismatch ||
-      this.signupForm.controls.password.errors.shortPassword
+      this.passwordMismatch ||
+      !this.signupForm.controls.password.errors.shortPassword
     ) {
       let answer = this.generatorService.createModel(
-        new Model('competitor', value)
+        new Model('competitors', value)
       );
       answer.subscribe((answer) => {
         //snackbar created profile or not and then navigate depending on the result
       });
     } else {
       //passwords dont match
+      console.log('passwords dont match');
     }
   }
   showGymForm() {
@@ -62,25 +73,14 @@ export class SignupComponent implements OnInit {
   login() {
     this.router.navigate(['/login']);
   }
-  createGym() {
-    //add gym to gymlocations table then update options
-    //also check if the gym already exists
-    let gymName = this.signupForm.controls.gymName.value;
-    let gymAddress = this.signupForm.controls.gymAddress.value;
-
-    let returnObs = this.generatorService.createModel(
-      new Model('locations', { gymName: gymName, address: gymAddress })
-    );
-    returnObs.subscribe((answer) => {
-      //location created or not then update the select options
-      console.log(answer);
-    });
-  }
   checkPasswords(password, sPassword) {
+    console.log(`Password 1 ${password} Password 2 ${sPassword}`);
+    console.log(this.signupForm.controls.password.errors);
+    console.log(this.signupForm.controls);
     if (password !== sPassword) {
-      this.signupForm.controls.password.errors.passwordMismatch = true;
-    } else if (password.length < 8) {
-      this.signupForm.controls.password.errors.shortPassword = true;
+      this.passwordMismatch = true;
+    } else {
+      this.passwordMismatch = false;
     }
   }
 }

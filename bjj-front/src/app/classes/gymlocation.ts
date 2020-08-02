@@ -1,8 +1,20 @@
 export default class GymLocation {
-  address: string;
   gymName: string;
-  constructor(address: string, gymName: string) {
-    this.address = address;
+  city: string;
+  street: string;
+  state: string;
+  zipcode: number;
+  constructor(
+    gymName: string,
+    city: string,
+    street: string,
+    state: string,
+    zipcode: number
+  ) {
     this.gymName = gymName;
+    this.city = city;
+    this.street = street;
+    this.state = state;
+    this.zipcode = zipcode;
   }
 }

@@ -24,4 +24,14 @@ export class LoginService {
       });
     return returnObs;
   }
+  signupSubmit(value) {
+    console.log(value + 'Signup submit value');
+    let returnObs = new Subject();
+    this.http
+      .post('http://fullstack.cyou/api/competitor', {
+        data: value,
+      })
+      .subscribe((answer) => {});
+    return returnObs;
+  }
 }

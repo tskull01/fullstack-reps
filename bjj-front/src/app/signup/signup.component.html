@@ -28,6 +28,9 @@
         <span *ngIf="signupForm.controls.password.errors.required"
           >Password is required.</span
         >
+        <span *ngIf="signupForm.controls.password.errors.minLength">
+          Password is too short must be 8 characters long
+        </span>
       </mat-error>
     </mat-form-field>
     <mat-form-field class="form-field" appearance="outline">
@@ -47,42 +50,37 @@
         <span *ngIf="signupForm.controls.password.errors.required"
           >Password is required.</span
         >
-        <span *ngIf="signupForm.controls.password.errors.passwordMismatch">
+        <span *ngIf="passwordMismatch">
           Passwords have to match
         </span>
-        <span *ngIf="signupForm.controls.password.errors.passwordMismatch">
+        <span *ngIf="signupForm.controls.password.errors.minLength">
           Password is too short must be 8 characters long
         </span>
-        <mat-hint>Passowrd must be > 8</mat-hint>
+        <mat-hint>Password must be > 8</mat-hint>
       </mat-error>
     </mat-form-field>
     <div *ngIf="!gymBool" class="select-gym">
-      <mat-form-field appearance="fill">
-        <mat-label>Home Gym</mat-label>
-        <mat-select formControlName="gymSelect">
-          <mat-option value="gym.name" *ngFor="let gym of gyms">{{
-            gym.name
-          }}</mat-option>
-        </mat-select>
+      <mat-form-field class="example-full-width">
+        <input
+          type="text"
+          placeholder="Your Home Gym"
+          aria-label="Gym"
+          matInput
+          formControlName="homeGym"
+          [matAutocomplete]="auto"
+        />
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let gym of gyms" [value]="gym">
+            {{ gym }}
+          </mat-option>
+        </mat-autocomplete>
       </mat-form-field>
       <button mat-raised-button (click)="showGymForm()">
         Enter New Gym
       </button>
     </div>
     <div class="create-gym" *ngIf="gymBool">
-      <mat-form-field appearance="outline">
-        <mat-label>Gym Name</mat-label>
-        <input matInput formControlName="gymName" />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Gym Location</mat-label>
-        <input matInput formControlName="gymAddress" />
-      </mat-form-field>
-      <div>
-        <button mat-raised-button (click)="createGym()">
-          Create Gym
-        </button>
-      </div>
+      <app-gym-form></app-gym-form>
     </div>
   </div>
   <div class="subButton">
