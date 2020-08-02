@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GeneratorService } from '../generator.service';
 import Model from '../classes/model';
+import GymLocation from '../classes/gymlocation';
 
 @Component({
   selector: 'app-gym-form',
@@ -28,13 +29,13 @@ export class GymFormComponent implements OnInit {
     //add gym to gymlocations table then update options
     //also check if the gym already exists
     let controls = this.gymForm.controls;
-    let gym = {
-      gymName: controls.gymName.value,
-      street: controls.street.value,
-      city: controls.city.value,
-      state: controls.state.value,
-      zip: controls.zip.value,
-    };
+    let gym = new GymLocation(
+      controls.gymName.value,
+      controls.city.value,
+      controls.street.value,
+      controls.state.value,
+      controls.zip.value
+    );
 
     let returnObs = this.generatorService.createModel(
       new Model('locations', gym)

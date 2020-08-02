@@ -17,7 +17,7 @@ const locationSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  zip: {
+  zipcode: {
     type: Number,
     required: true,
   },

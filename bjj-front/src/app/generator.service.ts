@@ -10,7 +10,7 @@ export class GeneratorService {
   constructor(private http: HttpClient) {}
 
   createModel(value: Model) {
-    console.log(JSON.stringify(value) + 'value inside createmodel');
+    console.log(JSON.stringify(value.data) + 'value inside createmodel');
     let returnObs = new Subject();
     this.http
       .post(`http://fullstack.cyou/api/${value.name}`, {
@@ -18,16 +18,6 @@ export class GeneratorService {
       })
       .subscribe((answer) => {
         console.log(answer + 'return answer');
-        returnObs.next(answer);
-        returnObs.complete();
-      });
-    return returnObs;
-  }
-  getAll(model) {
-    let returnObs = new Subject();
-    this.http
-      .get(`http://fullstack.cyou/api/${model}/${model}`)
-      .subscribe((answer) => {
         returnObs.next(answer);
         returnObs.complete();
       });
