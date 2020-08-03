@@ -18,12 +18,14 @@ const competitorSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  experienceLevel: {
-    type: String,
+  homeGym: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "location",
+    required: true,
   },
-  birthYear: Number,
   weight: { type: Number, required: true },
-  homeGym: String,
+  experienceLevel: String,
+  age: Number,
   pastResults: [{ type: mongoose.Schema.Types.ObjectId, ref: "result" }],
   currentTeams: [
     {

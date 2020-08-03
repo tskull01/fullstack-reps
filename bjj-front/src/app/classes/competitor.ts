@@ -1,29 +1,42 @@
 import GymLocation from './gymlocation';
 import Match from './match';
+import Team from './team';
 
 export default class Competitor {
-  name: String;
+  _id: String;
+  firstName: String;
+  lastName: String;
   email: String;
-  expLevel: string;
+  password: string;
   homeGym: GymLocation;
   weight: number;
+  expLevel: string;
+  age: number;
   prevMatches: Match[];
-  password: string;
+  currentTeams: Team[];
   constructor(
-    name: string,
-    email: string,
-    expLevel: string,
+    firstName: String,
+    lastName: String,
+    email: String,
+    password: string,
     homeGym: GymLocation,
     weight: number,
-    prevMatches: Match[],
-    password: string
+    expLevel?: string,
+    age?: number,
+    prevMatches?: Match[],
+    currentTeams?: Team[],
+    _id?: String
   ) {
-    this.name = name;
+    this._id = _id;
+    this.firstName = firstName;
+    this.lastName = lastName;
     this.email = email;
-    this.expLevel = expLevel;
+    this.password = password;
     this.homeGym = homeGym;
     this.weight = weight;
+    this.expLevel = expLevel;
+    this.age = age;
     this.prevMatches = prevMatches;
-    this.password = password;
+    this.currentTeams = currentTeams;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GeneratorService } from '../generator.service';
 import Model from '../classes/model';
@@ -11,6 +11,7 @@ import GymLocation from '../classes/gymlocation';
 })
 export class GymFormComponent implements OnInit {
   gymForm: FormGroup;
+  @Output() return: EventEmitter<any> = new EventEmitter();
   constructor(
     private formBuilder: FormBuilder,
     private generatorService: GeneratorService
@@ -22,20 +23,20 @@ export class GymFormComponent implements OnInit {
       street: [null, [Validators.required]],
       city: [null, [Validators.required]],
       state: [null, [Validators.required]],
-      zip: [null, [Validators.required]],
+      zipcode: [null, [Validators.required]],
     });
   }
   createGym() {
     //add gym to gymlocations table then update options
     //also check if the gym already exists
     let controls = this.gymForm.controls;
-    let gym = new GymLocation(
-      controls.gymName.value,
-      controls.city.value,
-      controls.street.value,
-      controls.state.value,
-      controls.zip.value
-    );
+    let gym = {
+      gymName: controls.gymName.value,
+      city: controls.city.value,
+      street: controls.street.value,
+      state: controls.state.value,
+      zipcode: controls.zipcode.value,
+    };
     console.log(gym);
     let returnObs = this.generatorService.createModel(
       new Model('locations', gym)
@@ -43,6 +44,10 @@ export class GymFormComponent implements OnInit {
     returnObs.subscribe((answer) => {
       //location created or not then update the select options
       console.log(answer);
+      this.return.emit(true);
     });
+  }
+  returnToSignup() {
+    this.return.emit(false);
   }
 }

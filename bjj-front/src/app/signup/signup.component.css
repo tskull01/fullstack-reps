@@ -18,8 +18,12 @@
 }
 .select-gym {
   display: flex;
-  width: 100%;
+  width: 80%;
   align-items: center;
   justify-content: space-between;
   align-items: baseline;
+  flex-wrap: wrap;
+}
+.input-width {
+  width: 40%;
 }

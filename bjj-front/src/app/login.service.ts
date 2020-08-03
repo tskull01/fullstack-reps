@@ -1,12 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Subject } from 'rxjs';
+import { Subject, AsyncSubject } from 'rxjs';
+import { CurrentService } from './current.service';
+import Competitor from './classes/competitor';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private currentService: CurrentService
+  ) {}
 
   checkLogin(email, password) {
     //Check for user on the competitors table
@@ -26,12 +31,16 @@ export class LoginService {
   }
   signupSubmit(value) {
     console.log(value + 'Signup submit value');
-    let returnObs = new Subject();
+    let returnObs = new AsyncSubject();
     this.http
       .post('http://fullstack.cyou/api/competitor', {
-        data: value,
+        ...value,
       })
-      .subscribe((answer) => {});
+      .subscribe((answer) => {
+        console.log(answer);
+        returnObs.next(answer);
+        returnObs.complete();
+      });
     return returnObs;
   }
 }

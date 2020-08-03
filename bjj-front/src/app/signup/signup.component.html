@@ -8,57 +8,84 @@
 <h3>Information for your new bjj-league profile</h3>
 <form [formGroup]="signupForm">
   <div class="form-flex">
-    <mat-form-field appearance="outline">
-      <mat-label>Full Name</mat-label>
-      <input matInput required formControlName="name" />
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Email</mat-label>
-      <input matInput required formControlName="email" />
-    </mat-form-field>
-    <mat-form-field class="form-field" appearance="outline">
-      <mat-label> Password </mat-label>
-      <input matInput required formControlName="password" type="password" />
-      <mat-error
-        *ngIf="
-          signupForm.controls.password.touched &&
-          signupForm.controls.password.invalid
-        "
+    <div>
+      <mat-form-field appearance="outline" class="input-width">
+        <mat-label>First Name</mat-label>
+        <input matInput required formControlName="first" pattern="[a-zA-Z]*" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="input-width">
+        <mat-label>Last Name</mat-label>
+        <input matInput required formControlName="last" pattern="[a-zA-Z]*" />
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="outline" class="input-width">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          required
+          formControlName="email"
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="input-width">
+        <mat-label>Weight</mat-label>
+        <input matInput required formControlName="weight" pattern="^[0-9]*$" />
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field
+        class="form-field"
+        appearance="outline"
+        class="input-width"
       >
-        <span *ngIf="signupForm.controls.password.errors.required"
-          >Password is required.</span
+        <mat-label> Password </mat-label>
+        <input
+          matInput
+          required
+          formControlName="password"
+          type="password"
+          pattern=".{8,}"
+        />
+        <mat-error
+          *ngIf="
+            signupForm.controls.password.touched &&
+            signupForm.controls.password.invalid
+          "
         >
-        <span *ngIf="signupForm.controls.password.errors.minLength">
-          Password is too short must be 8 characters long
-        </span>
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field class="form-field" appearance="outline">
-      <mat-label>Confirm Password </mat-label>
-      <input
-        matInput
-        required
-        formControlName="confirmPassword"
-        type="password"
-      />
-      <mat-error
-        *ngIf="
-          signupForm.controls.password.touched &&
-          signupForm.controls.password.invalid
-        "
+          <span *ngIf="signupForm.controls.password.errors.required"
+            >Password is required.</span
+          >
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        class="form-field"
+        appearance="outline"
+        class="input-width"
       >
-        <span *ngIf="signupForm.controls.password.errors.required"
-          >Password is required.</span
+        <mat-label>Confirm Password </mat-label>
+        <input
+          matInput
+          required
+          formControlName="confirmPassword"
+          type="password"
+        />
+        <mat-error
+          *ngIf="
+            signupForm.controls.password.touched &&
+            signupForm.controls.password.invalid
+          "
         >
-        <span *ngIf="passwordMismatch">
-          Passwords have to match
-        </span>
-        <span *ngIf="signupForm.controls.password.errors.minLength">
-          Password is too short must be 8 characters long
-        </span>
+          <span *ngIf="signupForm.controls.password.errors.required"
+            >Password is required.</span
+          >
+          <span *ngIf="passwordMismatch">
+            Passwords have to match
+          </span>
+        </mat-error>
         <mat-hint>Password must be > 8</mat-hint>
-      </mat-error>
-    </mat-form-field>
+      </mat-form-field>
+    </div>
     <div *ngIf="!gymBool" class="select-gym">
       <mat-form-field class="example-full-width">
         <input
@@ -75,12 +102,13 @@
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
+
       <button mat-raised-button (click)="showGymForm()">
         Enter New Gym
       </button>
     </div>
     <div class="create-gym" *ngIf="gymBool">
-      <app-gym-form></app-gym-form>
+      <app-gym-form (return)="returnGymForm($event)"></app-gym-form>
     </div>
   </div>
   <div class="subButton">

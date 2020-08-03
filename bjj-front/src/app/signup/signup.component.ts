@@ -1,15 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  FormControl,
-} from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import GymLocation from '../classes/gymlocation';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { GeneratorService } from '../generator.service';
 import Model from '../classes/model';
 import { WorkerService } from '../worker.service';
+import { AsyncSubject } from 'rxjs';
+import { MatAutocomplete } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-signup',
@@ -21,7 +18,10 @@ export class SignupComponent implements OnInit {
   gymForm: FormGroup;
   gymBool: boolean = false;
   gyms: GymLocation[] = [];
+  gymNames: string[];
+  @ViewChild('auto') autoComplete: MatAutocomplete;
   passwordMismatch: boolean = true;
+  selectedGym: string;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -31,41 +31,63 @@ export class SignupComponent implements OnInit {
 
   ngOnInit(): void {
     this.signupForm = this.formBuilder.group({
-      name: [null, [Validators.required]],
-      email: [null, [Validators.required]],
-      password: [null, Validators.required, Validators.minLength(8)],
-      confirmPassword: [null, Validators.required, Validators.minLength(8)],
+      first: [null, [Validators.required]],
+      last: [null, [Validators.required]],
+      email: [null, [Validators.required, Validators.email]],
+      weight: [null, [Validators.required, Validators.email]],
+      password: [null, Validators.required],
+      confirmPassword: [null, Validators.required],
       homeGym: [null, Validators.required],
     });
     this.workerService.returnAllModel('location').subscribe((answer: any) => {
-      console.log(answer);
-      this.gyms = answer.data.map((gym) => gym.gymName);
+      console.log(JSON.stringify(answer) + 'updating locations');
+      this.gyms = answer.data;
+      this.gymNames = answer.data.map((gym) => gym.gymName);
     });
   }
-
+  ngAfterViewInit(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    this.autoComplete.optionSelected.subscribe((event) => {
+      this.selectedGym = this.gyms.map((gym) => {
+        if (this.signupForm.controls.homeGym.value === gym.gymName) {
+          return gym._id;
+        }
+      })[0];
+    });
+  }
   submit(value) {
     // process form data and create new competitor
     //and add to competitor table
     //seperate gym and competitor data
-    console.log(value + ' SIGNUP SUBMIT ');
-    this.checkPasswords(
-      this.signupForm.controls.password,
-      this.signupForm.controls.confirmPassword
+    console.log(JSON.stringify(value) + ' SIGNUP SUBMIT ');
+    let passwordCheck = this.checkPasswords(
+      this.signupForm.controls.password.value,
+      this.signupForm.controls.confirmPassword.value
     );
-    if (
-      this.passwordMismatch ||
-      !this.signupForm.controls.password.errors.shortPassword
-    ) {
-      let answer = this.generatorService.createModel(
-        new Model('competitors', value)
-      );
-      answer.subscribe((answer) => {
-        //snackbar created profile or not and then navigate depending on the result
-      });
-    } else {
-      //passwords dont match
-      console.log('passwords dont match');
-    }
+    passwordCheck.subscribe((checked) => {
+      console.log(checked + ' CHECKED PASSWORD');
+      let signupControl = this.signupForm.controls;
+      if (checked) {
+        let newCompetitor = {
+          firstName: signupControl.firstName.value,
+          lastName: signupControl.lastName.value,
+          email: signupControl.email.value,
+          password: signupControl.password.value,
+          homeGym: this.selectedGym,
+          weight: signupControl.weight.value,
+        };
+        let answer = this.generatorService.createModel(
+          new Model('competitors', newCompetitor)
+        );
+        answer.subscribe((answer) => {
+          //snackbar created profile or not and then navigate depending on the result
+          console.log(JSON.stringify(answer));
+        });
+      } else {
+        //password failed snackbar
+      }
+    });
   }
   showGymForm() {
     this.gymBool = !this.gymBool;
@@ -77,10 +99,28 @@ export class SignupComponent implements OnInit {
     console.log(`Password 1 ${password} Password 2 ${sPassword}`);
     console.log(this.signupForm.controls.password.errors);
     console.log(this.signupForm.controls);
+    let passSub = new AsyncSubject<boolean>();
     if (password !== sPassword) {
+      console.log('passwords dont match');
       this.passwordMismatch = true;
+      passSub.next(false);
+      passSub.complete();
     } else {
       this.passwordMismatch = false;
+      passSub.next(true);
+      passSub.complete();
     }
+    return passSub;
+  }
+  returnGymForm(event) {
+    event
+      ? this.workerService
+          .returnAllModel('location')
+          .subscribe((answer: any) => {
+            console.log(answer + 'updating locations');
+            this.gyms = answer.data.map((gym) => gym.gymName);
+            this.showGymForm();
+          })
+      : this.showGymForm();
   }
 }

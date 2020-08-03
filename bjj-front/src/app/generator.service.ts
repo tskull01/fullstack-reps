@@ -10,11 +10,10 @@ export class GeneratorService {
   constructor(private http: HttpClient) {}
 
   createModel(value: Model) {
-    console.log(JSON.stringify(value.data) + 'value inside createmodel');
     let returnObs = new Subject();
     this.http
       .post(`http://fullstack.cyou/api/${value.name}`, {
-        data: value.data,
+        ...value.data,
       })
       .subscribe((answer) => {
         console.log(answer + 'return answer');
