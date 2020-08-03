@@ -34,7 +34,7 @@ export class SignupComponent implements OnInit {
       first: [null, [Validators.required]],
       last: [null, [Validators.required]],
       email: [null, [Validators.required, Validators.email]],
-      weight: [null, [Validators.required, Validators.email]],
+      weight: [null, [Validators.required, Validators.maxLength(3)]],
       password: [null, Validators.required],
       confirmPassword: [null, Validators.required],
       homeGym: [null, Validators.required],
@@ -42,7 +42,8 @@ export class SignupComponent implements OnInit {
     this.workerService.returnAllModel('location').subscribe((answer: any) => {
       console.log(JSON.stringify(answer) + 'updating locations');
       this.gyms = answer.data;
-      this.gymNames = answer.data.map((gym) => gym.gymName);
+      this.gymNames = this.gyms.map((gym) => gym.gymName);
+      console.log(this.gymNames);
     });
   }
   ngAfterViewInit(): void {
@@ -68,10 +69,11 @@ export class SignupComponent implements OnInit {
     passwordCheck.subscribe((checked) => {
       console.log(checked + ' CHECKED PASSWORD');
       let signupControl = this.signupForm.controls;
+
       if (checked) {
         let newCompetitor = {
-          firstName: signupControl.firstName.value,
-          lastName: signupControl.lastName.value,
+          firstName: signupControl.first.value,
+          lastName: signupControl.last.value,
           email: signupControl.email.value,
           password: signupControl.password.value,
           homeGym: this.selectedGym,
@@ -80,8 +82,13 @@ export class SignupComponent implements OnInit {
         let answer = this.generatorService.createModel(
           new Model('competitors', newCompetitor)
         );
-        answer.subscribe((answer) => {
+        answer.subscribe((answer: Response) => {
           //snackbar created profile or not and then navigate depending on the result
+          if (answer.status === 200) {
+            //log in user and set current user
+          } else {
+            //email already exists
+          }
           console.log(JSON.stringify(answer));
         });
       } else {
@@ -97,8 +104,6 @@ export class SignupComponent implements OnInit {
   }
   checkPasswords(password, sPassword) {
     console.log(`Password 1 ${password} Password 2 ${sPassword}`);
-    console.log(this.signupForm.controls.password.errors);
-    console.log(this.signupForm.controls);
     let passSub = new AsyncSubject<boolean>();
     if (password !== sPassword) {
       console.log('passwords dont match');

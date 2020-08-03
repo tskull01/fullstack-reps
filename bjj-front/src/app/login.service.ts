@@ -19,11 +19,12 @@ export class LoginService {
 
     let returnObs = new Subject();
     this.http
-      .post('http://fullstack.cyou/api/competitor', {
+      .post('http://fullstack.cyou/api/signin', {
         email: email,
         password: password,
       })
-      .subscribe((answer) => {
+      .subscribe((answer: Response) => {
+        console.log(answer);
         returnObs.next(answer);
         returnObs.complete();
       });

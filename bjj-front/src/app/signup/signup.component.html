@@ -30,7 +30,7 @@
       </mat-form-field>
       <mat-form-field appearance="outline" class="input-width">
         <mat-label>Weight</mat-label>
-        <input matInput required formControlName="weight" pattern="^[0-9]*$" />
+        <input matInput required formControlName="weight" type="number" />
       </mat-form-field>
     </div>
     <div>
@@ -97,7 +97,7 @@
           [matAutocomplete]="auto"
         />
         <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let gym of gyms" [value]="gym">
+          <mat-option *ngFor="let gym of gymNames" [value]="gym">
             {{ gym }}
           </mat-option>
         </mat-autocomplete>
@@ -112,7 +112,11 @@
     </div>
   </div>
   <div class="subButton">
-    <button mat-raised-button (click)="submit(signupForm.value)">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="submit(signupForm.value)"
+    >
       Submit
     </button>
   </div>

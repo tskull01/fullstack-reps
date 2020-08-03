@@ -11,9 +11,9 @@ import meetRouter from "./resources/meet/meet.router";
 import matchRouter from "./resources/match/match.router";
 import locationRouter from "./resources/location/location.router";
 import competitorRouter from "./resources/competitor/competitor.router";
-import allRouter from "./resources/all.router";
-
+import allRouter from "./resources/all.controller";
 import { connect } from "./resources/utils/db";
+import { signinController } from "./resources/signin.router";
 app.use(cors());
 app.use(json());
 dotenv.config();
@@ -41,6 +41,7 @@ app.use("/api/matchs", matchRouter);
 app.use("/api/locations", locationRouter);
 app.use("/api/competitors", competitorRouter);
 app.use("/api/all", allRouter);
+app.use("/api/signin", signinController);
 connect().then((connection) => {
   app.listen(port, () => {
     console.log(`App listening on port ${port}`);
