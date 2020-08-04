@@ -1,0 +1,25 @@
+<form [formGroup]="teamForm" class="team-flex">
+  <mat-form-field appearance="outline">
+    <mat-label>Team Name</mat-label>
+    <input matInput formControlName="name" />
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      type="text"
+      placeholder="Your Home Gym"
+      aria-label="Gym"
+      matInput
+      formControlName="gym"
+      [matAutocomplete]="auto"
+    />
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let gym of gymNames" [value]="gym">
+        {{ gym }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Head Coach</mat-label>
+    <input matInput formControlName="coach" />
+  </mat-form-field>
+</form>

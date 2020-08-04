@@ -8,11 +8,17 @@ const teamSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "competitor",
+      required: true,
     },
   ],
   gym: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "location",
+    required: true,
+  },
+  league: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "league",
     required: true,
   },
   coach: String,

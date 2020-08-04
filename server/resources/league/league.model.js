@@ -12,6 +12,10 @@ const leagueSchema = new mongoose.Schema({
       required: true,
     },
   ],
+  teamLimit: {
+    type: Number,
+    required: true,
+  },
   schedule: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "schedule",

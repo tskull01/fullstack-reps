@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 import League from '../classes/league';
-import { GeneratorService } from '../generator.service';
+import { CurrentService } from '../current.service';
+import { WorkerService } from '../worker.service';
+import Competitor from '../classes/competitor';
 
 @Component({
   selector: 'app-home',
@@ -12,8 +14,8 @@ import { GeneratorService } from '../generator.service';
 export class HomeComponent implements OnInit {
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
-    private generatorService: GeneratorService
+    private currentService: CurrentService,
+    private workerService: WorkerService
   ) {}
   loggedIn: boolean = false;
   isAdmin: boolean = false;
@@ -25,6 +27,22 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['']);
     this.leagueForm = new FormGroup({
       leagueSelection: new FormControl(this.leagueValue),
+    });
+    this.currentService.currentUser.subscribe((user: any) => {
+      console.log(JSON.stringify(user) + 'home login');
+      if (user) {
+        this.router.navigate(['']);
+        this.checkUserAdmin(user.data.email);
+        this.loggedIn = true;
+      } else {
+        console.log('user null home component');
+      }
+    });
+    this.currentService.isAdmin.subscribe((bool) => {
+      console.log(bool + 'is admin');
+      if (bool) {
+        this.isAdmin = true;
+      }
     });
   }
   login() {
@@ -39,5 +57,17 @@ export class HomeComponent implements OnInit {
   }
   selectLeague(value) {
     //find one league via the input
+  }
+  checkUserAdmin(email) {
+    let adminObs = this.workerService.getAdmin();
+    adminObs.subscribe((adminArray: any) => {
+      console.log(adminArray);
+      adminArray.map((admin) => {
+        console.log(admin + email);
+        if (admin === email) {
+          this.currentService.isAdmin.next(true);
+        }
+      });
+    });
   }
 }

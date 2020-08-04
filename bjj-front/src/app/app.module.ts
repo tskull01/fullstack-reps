@@ -16,6 +16,8 @@ import { SignupComponent } from './signup/signup.component';
 import { CreateLeagueComponent } from './create-league/create-league.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { GymFormComponent } from './gym-form/gym-form.component';
+import { TeamFormComponent } from './team-form/team-form.component';
+import { ScheduleGenComponent } from './schedule-gen/schedule-gen.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { GymFormComponent } from './gym-form/gym-form.component';
     SignupComponent,
     CreateLeagueComponent,
     GymFormComponent,
+    TeamFormComponent,
+    ScheduleGenComponent,
   ],
   imports: [
     BrowserModule,

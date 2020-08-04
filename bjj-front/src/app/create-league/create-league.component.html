@@ -5,3 +5,38 @@
     Return Home
   </button>
 </mat-toolbar>
+
+<form [formGroup]="leagueForm" class="league-flex">
+  <mat-form-field appearance="outline">
+    <mat-label>League Name</mat-label>
+    <input matInput formControlName="name" />
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Number of Teams</mat-label>
+    <mat-select [(value)]="selectedNum" (click)="setTeamForms()">
+      <mat-option *ngFor="let num of numbers" value="num">
+        {{ num }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Competitors per Team</mat-label>
+    <mat-select [(value)]="selectedTeamLimit">
+      <mat-option *ngFor="let size of teamSizes" value="size">
+        {{ size }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div *ngFor="#team of teams">
+    <app-team-form [events]="submitSubject.asObservable()"></app-team-form>
+  </div>
+  <mat-form-field appearance="outline">
+    <mat-label>Start Date</mat-label>
+    <input matInput type="date" formControlName="start" />
+  </mat-form-field>
+  <div>
+    <button mat-raised-button (click)="submit()">
+      Generate Schedule
+    </button>
+  </div>
+</form>

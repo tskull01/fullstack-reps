@@ -1,7 +1,7 @@
 <mat-toolbar>
   <h2>Bjj-league-placeholder</h2>
   <span class="example-spacer" style="flex: 1 1 auto;"></span>
-  <button mat-raised-button (click)="login()">
+  <button mat-raised-button (click)="login()" *ngIf="!loggedIn">
     Login
   </button>
 </mat-toolbar>

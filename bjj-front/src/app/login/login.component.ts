@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../login.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { CurrentService } from '../current.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private loginService: LoginService,
     private router: Router,
-    private route: ActivatedRoute
+    private currentService: CurrentService
   ) {}
 
   ngOnInit(): void {
@@ -34,9 +35,21 @@ export class LoginComponent implements OnInit {
       this.loginForm.value.email,
       this.loginForm.value.password
     );
-    // returnObs.subscribe((answer) => {
-
-    //});
+    returnObs.subscribe((answer: any) => {
+      if (answer) {
+        console.log('logging in');
+        this.currentService.currentUser.next(answer);
+      } else {
+        //login failed
+        if (answer === false) {
+          //Password incorrect
+          console.log('Password incorrect');
+        } else {
+          //USer not found
+          console.log('User not found');
+        }
+      }
+    });
   }
   signup() {
     this.router.navigate(['/signup']);

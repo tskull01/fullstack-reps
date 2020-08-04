@@ -7,6 +7,8 @@ import Model from '../classes/model';
 import { WorkerService } from '../worker.service';
 import { AsyncSubject } from 'rxjs';
 import { MatAutocomplete } from '@angular/material/autocomplete';
+import { CurrentService } from '../current.service';
+import { LoginService } from '../login.service';
 
 @Component({
   selector: 'app-signup',
@@ -25,8 +27,9 @@ export class SignupComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private generatorService: GeneratorService,
-    private workerService: WorkerService
+    private workerService: WorkerService,
+    private currentService: CurrentService,
+    private loginService: LoginService
   ) {}
 
   ngOnInit(): void {
@@ -79,20 +82,19 @@ export class SignupComponent implements OnInit {
           homeGym: this.selectedGym,
           weight: signupControl.weight.value,
         };
-        let answer = this.generatorService.createModel(
-          new Model('competitors', newCompetitor)
-        );
-        answer.subscribe((answer: Response) => {
-          //snackbar created profile or not and then navigate depending on the result
-          if (answer.status === 200) {
-            //log in user and set current user
+        let answer = this.loginService.signupSubmit(newCompetitor);
+        answer.subscribe((answer: any) => {
+          //snackbar created profile or not and then navigate depending on the
+          if (answer) {
+            this.currentService.currentUser.next(answer);
           } else {
-            //email already exists
+            //User exists
+            console.log('user exists');
           }
-          console.log(JSON.stringify(answer));
         });
       } else {
         //password failed snackbar
+        console.log('passwords dont match');
       }
     });
   }

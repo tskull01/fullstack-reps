@@ -7,8 +7,9 @@ import Competitor from './classes/competitor';
   providedIn: 'root',
 })
 export class CurrentService {
-  currentLeague: BehaviorSubject<League>;
-  currentUser: BehaviorSubject<Competitor>;
+  currentLeague: BehaviorSubject<League> = new BehaviorSubject(null);
+  currentUser: BehaviorSubject<Competitor> = new BehaviorSubject(null);
+  isAdmin: BehaviorSubject<boolean> = new BehaviorSubject(false);
   constructor() {}
   setCurrentLeague(league: League) {
     if (this.currentLeague) {
@@ -18,10 +19,11 @@ export class CurrentService {
     }
   }
   setCurrentUser(competitor: Competitor) {
-    if (this.currentUser) {
-      this.currentUser.next(competitor);
-    } else {
-      this.currentUser = new BehaviorSubject<Competitor>(competitor);
-    }
+    if (competitor._id)
+      if (this.currentUser) {
+        this.currentUser.next(competitor);
+      } else {
+        this.currentUser = new BehaviorSubject<Competitor>(competitor);
+      }
   }
 }

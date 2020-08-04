@@ -26,6 +26,9 @@ dotenv.config();
 //app.get("/", (req, res) => {
 //  res.sendFile(path.join(__dirname, "fs-react/build", "index.html"));
 //});
+app.get("/admin", (req, res) => {
+  res.send(process.env.ADMIN);
+});
 
 app.use(express.static(path.join(__dirname, "../bjj-front/dist")));
 

@@ -4,13 +4,13 @@ export const getOne = (model) => async (req, res) => {
     const doc = await model.findOne({ _id: req.params.id }).lean().exec();
     if (!doc) {
       console.log(doc);
-      return res.status(400).end();
+      return res.status(400).json({ data: null }).end();
     }
     console.log(doc);
     res.status(200).json({ data: doc });
   } catch (e) {
     console.error(e);
-    res.status(400).end();
+    res.status(400).json({ data: null }).end();
   }
 };
 
